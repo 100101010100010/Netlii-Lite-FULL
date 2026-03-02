@@ -5,7 +5,7 @@ Welcome to Netlii, my flagship gaming website.
 - games
 - movies
 - proxy
-- yt unblocker
+- apps
 - AND ITS STATIC!!
   
 ## why me?
@@ -13,7 +13,8 @@ Welcome to Netlii, my flagship gaming website.
 - please support the project (star, fork, make you own link)
 
 ## other features
-- it will only work on chromebooks for "security" reasons. (beta)
+- borgur
+
   
 ## MYOL (make your own link)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/chilicheesemonkey/netlii-games)

@@ -246,7 +246,7 @@
                 await navigator.serviceWorker.register('/projects/Nexus-Proxy/sw.js', { scope: './' });
                 
                 const conn = new BareMux.BareMuxConnection("/projects/Nexus-Proxy/bareworker.js");
-                await conn.setTransport("./bareworker.js", [{ wisp: "wss://wisp.mercurywork.shop/" }]);
+                await conn.setTransport("/projects/Nexus-Proxy/bareworker.js", [{ wisp: "wss://wisp.mercurywork.shop/" }]);
                 
                 window.proxyReady = true;
                 console.log("Nexus Engine Initialized");

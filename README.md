@@ -24,7 +24,8 @@ Welcome to Netlii, my flagship gaming website.
 ## Credits
 - 3kh0 lite for the games and alot of the framework
 - rhenryw for uv static v2 (thx bro :D )
-- UGS (ultimate game stash) for a lot of the games
+- UGS (ultimate game stash) for A LOT of the games
 - Destroyed12121 for the static scramjet code (that i modded to be NEXUS)
+- Pete Zah for the movies site that i modded
 - gointerstellar/useinterstellar (where this whole idea started)
 - and finally bubbergamesites/0K3A, my first game site

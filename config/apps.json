@@ -1,5 +1,15 @@
 [
    {
+    "link":  "https://drive.google.com/uc?export=download&id=1ySqDVvHiC_2nCckOKTHKtzlELTvVV8OW",
+    "imgSrc": "projects/download.png",
+    "title": "Download Netlii"
+  },
+   {
+    "link":  "https://drive.google.com/uc?export=download&id=1754Nv4OVesQlqi3Vg9ITqATHsNfiaJsu",
+    "imgSrc": "projects/download.png",
+    "title": "Download Netlii (alt)"
+  },
+   {
     "link":  "Nexus-Proxy/",
     "imgSrc": "Nexus-Proxy/749.png",
     "title": "Nexus Proxy"

@@ -19,7 +19,7 @@ Welcome to Netlii, my flagship gaming website.
   
 ## MYOL (make your own link)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/chilicheesemonkey/netlii-games)
-[![Deploy to Cloudflare](https://deploy.pages.cloudflare.com/button)](https://deploy.pages.cloudflare.com/?url=https://github.com/chilicheesemonkey/netlii-games)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/chilicheesemonkey/netlii-games)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/chilicheesemonkey/netlii-games)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/chilicheesemonkey/netlii-games)
 

@@ -19,7 +19,7 @@
                     // Warm up the connection to the WISP server
                     if (window.BareMux) {
                         const conn = new window.BareMux.BareMuxConnection("/Nexus-Proxy/bareworker.js");
-                        const wispUrl = localStorage.getItem("proxServer") || "wss://glseries.net/wisp/";
+                        const wispUrl = localStorage.getItem("proxServer") || "wss://wisp.mercurywork.shop";
                         
                         await conn.setTransport(
                             "https://cdn.jsdelivr.net/npm/@mercuryworkshop/epoxy-transport@2.1.28/dist/index.mjs", 

@@ -32,7 +32,7 @@
             if ('serviceWorker' in navigator) {
                 try {
                     // Register the worker
-                    const reg = await navigator.serviceWorker.register('/Nexus-Proxy/sw.js', {
+                    const reg = await navigator.serviceWorker.register('./sw.js', {
                         scope: './'
                     });
                     
@@ -64,7 +64,7 @@
         if ('serviceWorker' in navigator) {
             try {
                 // Register the worker
-                const reg = await navigator.serviceWorker.register('/Nexus-Proxy/sw.js', {
+                const reg = await navigator.serviceWorker.register('./sw.js', {
                     scope: './'
                 });
 
@@ -77,7 +77,7 @@
                 await navigator.serviceWorker.ready;
 
                 if (window.BareMux) {
-                    const conn = new window.BareMux.BareMuxConnection("/Nexus-Proxy/bareworker.js");
+                    const conn = new window.BareMux.BareMuxConnection("./bareworker.js");
                     
                     // Try a different WISP server if the first one is stuck
                     // Use 'wss://wisp.mercurywork.shop/' as it is usually the most stable
@@ -315,10 +315,10 @@ function search(query) {
             url = 'https://' + url;
         }
         // Redirect to the Nexus embed page with the URL
-        window.location.href = `/Nexus-Proxy/embed.html#${url}`;
+        window.location.href = `/embed.html#${url}`;
     } else {
         // Redirect to the Nexus embed page with a Google search
-        window.location.href = `/Nexus-Proxy/embed.html#${searchEngine}${encodeURIComponent(query)}`;
+        window.location.href = `/embed.html#${searchEngine}${encodeURIComponent(query)}`;
     }
 }
 

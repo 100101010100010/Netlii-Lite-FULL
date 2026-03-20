@@ -3,19 +3,17 @@ Welcome to Netlii, my flagship gaming website.
 <img width="1164" height="598" alt="Screenshot 2026-03-01 090507" src="https://github.com/user-attachments/assets/98a15229-298e-42fb-a8da-a3dcb5788bbe"/>
 ## Why use it?
 - games
-- movies
+- movies (glitchy)
 - proxy
 - apps
 - AND ITS STATIC!!
   
 ## why me?
 - i am a beginner
-- please support the project (star, fork, make you own link)
+- please support the project (star, fork, make your own link)
 
 ## other features
-- calcultor app
-- downloadable singlefile
-
+- updated VERY frequently
   
 ## MYOL (make your own link)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/chilicheesemonkey/netlii-games)[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/chilicheesemonkey/netlii-games)

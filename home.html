@@ -6,50 +6,43 @@
     window.BareMux = BareMux;
 
     async function initProxy() {
-        if (!('serviceWorker' in navigator)) return;
+    if (!('serviceWorker' in navigator)) return;
 
-        try {
-            // 1. Register the Service Worker
-            const reg = await navigator.serviceWorker.register('./sw.js', {
-                scope: './'
-            });
+    try {
+        const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+        
+        // Wait for the worker to be ready
+        await navigator.serviceWorker.ready;
 
-            // 2. Wait for the Service Worker to be active and controlling the page
-            // This is the most common point of failure
-            await navigator.serviceWorker.ready;
-            
-            // Ensure the controller is set (especially on first load)
-            if (!navigator.serviceWorker.controller) {
-                // Reload if it's the very first time to ensure the SW takes control
-                window.location.reload();
-                return;
-            }
-
-            // 3. Initialize BareMux Connection
-            if (window.BareMux) {
-                const conn = new window.BareMux.BareMuxConnection("./bareworker.js");
-                const wispUrl = localStorage.getItem("proxServer") || "wss://wisp.mercurywork.shop/";
-                
-                // Set the transport
-                await conn.setTransport(
-                    "https://cdn.jsdelivr.net/npm/@mercuryworkshop/epoxy-transport@2.1.28/dist/index.mjs", 
-                    [{ wisp: wispUrl }]
-                );
-                
-                // 4. Send the config to the Service Worker
-                navigator.serviceWorker.controller.postMessage({
-                    type: "config",
-                    wispurl: wispUrl,
-                    autoswitch: true
-                });
-
-                console.log("NETLII Proxy: Fully Initialized");
-            }
-        } catch (err) {
-            console.error("NETLII Proxy: Initialization failed:", err);
+        // If there's no controller, the SW isn't "claiming" the page yet
+        if (!navigator.serviceWorker.controller) {
+            // Force a reload to let the SW take over
+            window.location.reload();
+            return;
         }
-    }
 
+        const wispUrl = localStorage.getItem("proxServer") || "wss://wisp.mercurywork.shop/";
+        
+        // Send config directly to the controller so configReadyPromise in sw.js resolves
+        navigator.serviceWorker.controller.postMessage({
+            type: "config",
+            wispurl: wispUrl,
+            autoswitch: true
+        });
+
+        // Initialize BareMux for the frontend
+        if (window.BareMux) {
+            const conn = new window.BareMux.BareMuxConnection("./bareworker.js");
+            await conn.setTransport(
+                "https://cdn.jsdelivr.net/npm/@mercuryworkshop/epoxy-transport@2.1.28/dist/index.mjs", 
+                [{ wisp: wispUrl }]
+            );
+            console.log("NETLII: Proxy Initialized");
+        }
+    } catch (err) {
+        console.error("NETLII: Init Failed", err);
+    }
+}
     // Run the init
     initProxy();
 </script>

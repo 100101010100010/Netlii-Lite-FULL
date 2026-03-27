@@ -245,11 +245,22 @@ self.addEventListener("message", ({ data }) => {
 });
 
 self.addEventListener("fetch", (event) => {
+    const url = new URL(event.request.url);
+
+    // FIX: Do NOT intercept requests to your own internal proxy files
+    // This prevents the "forever loop" during initialization
+    if (
+        url.pathname.includes('sw.js') || 
+        url.pathname.includes('bareworker.js') || 
+        url.hostname.includes('cdn.jsdelivr.net') ||
+        url.pathname.endsWith('.wasm')
+    ) {
+        return fetch(event.request);
+    }
+
     event.respondWith((async () => {
-        // Check if request URL matches ad blocking patterns
         if (isAdBlocked(event.request.url)) {
-            console.log("SW: Blocked ad request:", event.request.url);
-            return new Response(new ArrayBuffer(0), { status: 204 });
+            return new Response(null, { status: 204 });
         }
 
         await scramjet.loadConfig();

@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <script type="module">
-        import * as BareMux from "https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux/dist/index.mjs";
-        window.BareMux = BareMux;
-    </script>
-
+    import * as BareMux from "https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux/dist/index.mjs";
+    window.BareMux = BareMux;
+</script>
     <script>
         async function registerAndConfig() {
         const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
@@ -54,11 +53,6 @@
         }
         preInitProxy();
     </script>
-    <script type="module">
-    import * as BareMux from "https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux/dist/index.mjs";
-    window.BareMux = BareMux;
-</script>
-
 <script>
     async function initProxy() {
         if ('serviceWorker' in navigator) {

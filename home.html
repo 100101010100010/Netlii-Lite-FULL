@@ -9,12 +9,12 @@
         if (!('serviceWorker' in navigator)) return;
 
         try {
-            // 1. Register and wait for activation
+            // 1. Register and wait for the worker to be ready
             const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
             await navigator.serviceWorker.ready;
 
             // 2. Critical: If the SW isn't controlling the page yet, reload once.
-            // This is why it often "freezes" on the first visit.
+            // This ensures the MessagePort for bare-mux can be established correctly.
             if (!navigator.serviceWorker.controller) {
                 window.location.reload();
                 return;
@@ -22,23 +22,23 @@
 
             const wispUrl = localStorage.getItem("proxServer") || "wss://wisp.mercurywork.shop/";
 
-            // 3. Configure the ACTIVE Service Worker
-            navigator.serviceWorker.controller.postMessage({
-                type: "config",
-                wispurl: wispUrl,
-                autoswitch: true
-            });
-
-            // 4. Setup BareMux for the frontend
+            // 3. Setup BareMux Connection
             const conn = new window.BareMux.BareMuxConnection("./bareworker.js");
             await conn.setTransport(
                 "https://cdn.jsdelivr.net/npm/@mercuryworkshop/epoxy-transport@2.1.28/dist/index.mjs", 
                 [{ wisp: wispUrl }]
             );
+
+            // 4. Send configuration to the active Service Worker
+            navigator.serviceWorker.controller.postMessage({
+                type: "config",
+                wispurl: wispUrl,
+                autoswitch: true
+            });
             
-            console.log("NETLII: Proxy Initialized Successfully");
+            console.log("NETLII: Proxy and Bare-Mux Ready");
         } catch (err) {
-            console.error("NETLII: Initialization Failed", err);
+            console.error("NETLII: Initialization Error", err);
         }
     }
 

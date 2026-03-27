@@ -247,15 +247,15 @@ self.addEventListener("message", ({ data }) => {
 self.addEventListener("fetch", (event) => {
     const url = new URL(event.request.url);
 
-    // FIX: Do NOT intercept requests to your own internal proxy files
-    // This prevents the "forever loop" during initialization
+    // BREAK THE LOOP: Do not proxy internal assets or CDNs
     if (
         url.pathname.includes('sw.js') || 
         url.pathname.includes('bareworker.js') || 
         url.hostname.includes('cdn.jsdelivr.net') ||
-        url.pathname.endsWith('.wasm')
+        url.pathname.endsWith('.wasm') ||
+        url.pathname.endsWith('.js') && !url.pathname.includes('scramjet')
     ) {
-        return fetch(event.request);
+        return; // Let the browser handle these normally
     }
 
     event.respondWith((async () => {
@@ -263,10 +263,15 @@ self.addEventListener("fetch", (event) => {
             return new Response(null, { status: 204 });
         }
 
-        await scramjet.loadConfig();
-        if (scramjet.route(event)) {
-            return scramjet.fetch(event);
+        try {
+            await scramjet.loadConfig();
+            if (scramjet.route(event)) {
+                return await scramjet.fetch(event);
+            }
+        } catch (err) {
+            console.error("Scramjet Route Error:", err);
         }
+        
         return fetch(event.request);
     })());
 });

@@ -1,38 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <script type="module">
+  <script type="module">
     import * as BareMux from "https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux/dist/index.mjs";
     window.BareMux = BareMux;
 
     async function initProxy() {
         if (!('serviceWorker' in navigator)) return;
 
-        const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
-        await navigator.serviceWorker.ready;
+        try {
+            // 1. Register and wait for activation
+            const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+            await navigator.serviceWorker.ready;
 
-        // If the SW isn't controlling the page yet, we MUST reload once.
-        if (!navigator.serviceWorker.controller) {
-            window.location.reload();
-            return;
+            // 2. Critical: If the SW isn't controlling the page yet, reload once.
+            // This is why it often "freezes" on the first visit.
+            if (!navigator.serviceWorker.controller) {
+                window.location.reload();
+                return;
+            }
+
+            const wispUrl = localStorage.getItem("proxServer") || "wss://wisp.mercurywork.shop/";
+
+            // 3. Configure the ACTIVE Service Worker
+            navigator.serviceWorker.controller.postMessage({
+                type: "config",
+                wispurl: wispUrl,
+                autoswitch: true
+            });
+
+            // 4. Setup BareMux for the frontend
+            const conn = new window.BareMux.BareMuxConnection("./bareworker.js");
+            await conn.setTransport(
+                "https://cdn.jsdelivr.net/npm/@mercuryworkshop/epoxy-transport@2.1.28/dist/index.mjs", 
+                [{ wisp: wispUrl }]
+            );
+            
+            console.log("NETLII: Proxy Initialized Successfully");
+        } catch (err) {
+            console.error("NETLII: Initialization Failed", err);
         }
-
-        const wispUrl = localStorage.getItem("proxServer") || "wss://wisp.mercurywork.shop/";
-
-        // 1. Tell the Service Worker its config so configReadyPromise resolves
-        navigator.serviceWorker.controller.postMessage({
-            type: "config",
-            wispurl: wispUrl,
-            autoswitch: true
-        });
-
-        // 2. Setup BareMux for the frontend
-        const conn = new window.BareMux.BareMuxConnection("./bareworker.js");
-        await conn.setTransport(
-            "https://cdn.jsdelivr.net/npm/@mercuryworkshop/epoxy-transport@2.1.28/dist/index.mjs", 
-            [{ wisp: wispUrl }]
-        );
-        console.log("NETLII: Proxy Ready");
     }
 
     initProxy();

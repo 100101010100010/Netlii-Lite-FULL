@@ -247,8 +247,8 @@ self.addEventListener("message", ({ data }) => {
 self.addEventListener("fetch", (event) => {
     const url = new URL(event.request.url);
 
-    // BREAK THE LOOP: Do not intercept internal assets or CDNs
-    // This allows your scripts to load so the proxy can actually initialize
+    // FIX: Bypass the proxy for internal setup files and CDNs
+    // This allows bare-mux and scramjet to load their dependencies without deadlocking
     if (
         url.pathname.includes('sw.js') || 
         url.pathname.includes('bareworker.js') || 
@@ -260,14 +260,13 @@ self.addEventListener("fetch", (event) => {
     }
 
     event.respondWith((async () => {
-        // Handle Ad Blocking
         if (isAdBlocked(event.request.url)) {
             return new Response(null, { status: 204 });
         }
 
         try {
             await scramjet.loadConfig();
-            // Only use Scramjet if the route matches the proxy prefix
+            // Only route through Scramjet if it's a proxy request
             if (scramjet.route(event)) {
                 return await scramjet.fetch(event);
             }
@@ -275,11 +274,10 @@ self.addEventListener("fetch", (event) => {
             console.error("Scramjet Route Error:", err);
         }
         
-        // Default: let normal navigation (Games/Apps) pass through
+        // Default: allow normal site navigation (Games, Apps, etc.)
         return fetch(event.request);
     })());
 });
-
 scramjet.addEventListener("request", async (e) => {
     e.response = (async () => {
         await configReadyPromise;

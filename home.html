@@ -1,49 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="module">
+   <script type="module">
     import * as BareMux from "https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux/dist/index.mjs";
     window.BareMux = BareMux;
 
     async function initProxy() {
-    if (!('serviceWorker' in navigator)) return;
+        if (!('serviceWorker' in navigator)) return;
 
-    try {
         const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
-        
-        // Wait for the worker to be ready
         await navigator.serviceWorker.ready;
 
-        // If there's no controller, the SW isn't "claiming" the page yet
+        // If the SW isn't controlling the page yet, we MUST reload once.
         if (!navigator.serviceWorker.controller) {
-            // Force a reload to let the SW take over
             window.location.reload();
             return;
         }
 
         const wispUrl = localStorage.getItem("proxServer") || "wss://wisp.mercurywork.shop/";
-        
-        // Send config directly to the controller so configReadyPromise in sw.js resolves
+
+        // 1. Tell the Service Worker its config so configReadyPromise resolves
         navigator.serviceWorker.controller.postMessage({
             type: "config",
             wispurl: wispUrl,
             autoswitch: true
         });
 
-        // Initialize BareMux for the frontend
-        if (window.BareMux) {
-            const conn = new window.BareMux.BareMuxConnection("./bareworker.js");
-            await conn.setTransport(
-                "https://cdn.jsdelivr.net/npm/@mercuryworkshop/epoxy-transport@2.1.28/dist/index.mjs", 
-                [{ wisp: wispUrl }]
-            );
-            console.log("NETLII: Proxy Initialized");
-        }
-    } catch (err) {
-        console.error("NETLII: Init Failed", err);
+        // 2. Setup BareMux for the frontend
+        const conn = new window.BareMux.BareMuxConnection("./bareworker.js");
+        await conn.setTransport(
+            "https://cdn.jsdelivr.net/npm/@mercuryworkshop/epoxy-transport@2.1.28/dist/index.mjs", 
+            [{ wisp: wispUrl }]
+        );
+        console.log("NETLII: Proxy Ready");
     }
-}
-    // Run the init
+
     initProxy();
 </script>
     <meta charset="UTF-8" />

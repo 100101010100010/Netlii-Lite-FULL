@@ -247,24 +247,27 @@ self.addEventListener("message", ({ data }) => {
 self.addEventListener("fetch", (event) => {
     const url = new URL(event.request.url);
 
-    // BREAK THE LOOP: Do not proxy internal assets or CDNs
+    // BREAK THE LOOP: Do not intercept internal assets or CDNs
+    // This allows your scripts to load so the proxy can actually initialize
     if (
         url.pathname.includes('sw.js') || 
         url.pathname.includes('bareworker.js') || 
         url.hostname.includes('cdn.jsdelivr.net') ||
-        url.pathname.endsWith('.wasm') ||
-        url.pathname.endsWith('.js') && !url.pathname.includes('scramjet')
+        url.hostname.includes('github.com') ||
+        url.pathname.endsWith('.wasm')
     ) {
         return; // Let the browser handle these normally
     }
 
     event.respondWith((async () => {
+        // Handle Ad Blocking
         if (isAdBlocked(event.request.url)) {
             return new Response(null, { status: 204 });
         }
 
         try {
             await scramjet.loadConfig();
+            // Only use Scramjet if the route matches the proxy prefix
             if (scramjet.route(event)) {
                 return await scramjet.fetch(event);
             }
@@ -272,6 +275,7 @@ self.addEventListener("fetch", (event) => {
             console.error("Scramjet Route Error:", err);
         }
         
+        // Default: let normal navigation (Games/Apps) pass through
         return fetch(event.request);
     })());
 });

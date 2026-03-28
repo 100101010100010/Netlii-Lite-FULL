@@ -1,12 +1,12 @@
 [
    {
     "link": "/projects/1/",
-    "imgSrc": "/projects/1/meta/apple-touch-icon.png",
+    "imgSrc": "/projects/1/images.png",
     "title": "1"
   },
   {
     "link": "/projects/2048/",
-    "imgSrc": "/projects/2048/thumb.png",
+    "imgSrc": "/projects/2048/2048.webp",
     "title": "2048"
   },
   {
@@ -16,7 +16,7 @@
   },
   {
     "link": "/projects/9007199254740992/",
-    "imgSrc": "/projects/2048/thumb.png",
+    "imgSrc": "/projects/2048/2048.webp",
     "title": "9007199254740992"
   },
   {
@@ -162,7 +162,7 @@
   },
   {
     "link": "/projects/cell-machine/",
-    "imgSrc": "/projects/cell-machine/img/te9nDu.png",
+    "imgSrc": "/projects/cell-machine/cellmachine.png",
     "title": "Cell Machine"
   },
   {
@@ -197,7 +197,7 @@
   },
   {
     "link": "/projects/cookie-clicker/",
-    "imgSrc": "/projects/cookie-clicker/cookie1.jpeg",
+    "imgSrc": "/projects/cookie-clicker/images.jpg",
     "title": "Cookie Clicker"
   },
   {
@@ -314,16 +314,6 @@
     "link": "/projects/drifthunters/",
     "imgSrc": "/projects/drifthunters/drifthunters.png",
     "title": "Drift hunters"
-  },
-   {
-    "link": "/projects/dt-dash/",
-    "imgSrc": "/projects/dt-dash/Screenshot 2026-02-24 161306.png",
-    "title": "(DT) DT Dash (Scratch)"
-  },
-   {
-    "link": "/projects/dt-gog/",
-    "imgSrc": "/projects/dt-gog/Screenshot 2026-02-24 160515.png",
-    "title": "(DT) Gods of Gravity (scratch)"
   },
   {
     "link": "/projects/ducklife1/",

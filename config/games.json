@@ -16,7 +16,7 @@
   },
   {
     "link": "/projects/9007199254740992/",
-    "imgSrc": "/projects/9007199254740992/logo-4.png",
+    "imgSrc": "/projects/2048/thumb.png",",
     "title": "9007199254740992"
   },
   {
@@ -41,7 +41,7 @@
   },
   {
     "link": "/projects/among-us/",
-    "imgSrc": "/projects/among-us/red.png",
+    "imgSrc": "/projects/among-us/download.jpg",
     "title": "Among Us"
   },
   {
@@ -50,13 +50,8 @@
     "title": "Avalanche"
   },
   {
-    "link": "/projects/BR0WS3R/",
-    "imgSrc": "/projects/BR0WS3R/logo.png",
-    "title": "BubberBrowser"
-  },
-  {
     "link": "/projects/backrooms/",
-    "imgSrc": "/projects/backrooms/img/splash.jpg",
+    "imgSrc": "/projects/backrooms/backrooms.png",
     "title": "Backrooms"
   },
   {
@@ -71,7 +66,7 @@
   },
   {
     "link": "/projects/basketball-stars/",
-    "imgSrc": "/projects/basketball-stars/assets/images/basketball-stars.png",
+    "imgSrc": "/projects/basketball-stars/bbstars.png",
     "title": "Basketball Stars"
   },
   {
@@ -277,7 +272,7 @@
   },
   {
     "link": "/projects/DogeMiner/",
-    "imgSrc": "/projects/DogeMiner/img/dogeminer_300x300.png",
+    "imgSrc": "/projects/DogeMiner/img/dogeminer.png",
     "title": "Doge Miner"
   },
   {
